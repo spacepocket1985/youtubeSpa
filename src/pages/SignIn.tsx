@@ -1,5 +1,7 @@
+import { PageWrapper } from '../components/pageWrapper/PageWrapper';
+
 const SignIn: React.FC = () => {
-  return <h2>SignIn page</h2>;
+  return <PageWrapper title={'Вход'}></PageWrapper>;
 };
 
 export default SignIn;
