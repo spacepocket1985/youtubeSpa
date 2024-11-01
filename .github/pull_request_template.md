@@ -1,4 +1,4 @@
-#### 🐶 [Task link](url)
+#### 🐶 Project issues:
 
 #### 🤔 This is a ...
 
