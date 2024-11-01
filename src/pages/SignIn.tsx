@@ -1,10 +1,10 @@
-import { SiginInForm } from '../components/forms/SiginInForm';
+import { SignInForm } from '../components/forms/SignInForm';
 import { PageWrapper } from '../components/pageWrapper/PageWrapper';
 
 const SignIn: React.FC = () => {
   return (
-    <PageWrapper title={'Вход'}>
-      <SiginInForm />
+    <PageWrapper title={'Login'}>
+      <SignInForm />
     </PageWrapper>
   );
 };

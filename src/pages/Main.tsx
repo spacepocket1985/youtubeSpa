@@ -1,7 +1,7 @@
 import { PageWrapper } from '../components/pageWrapper/PageWrapper';
 
 const Main: React.FC = () => {
-  return <PageWrapper title={'Поиск видео'}></PageWrapper>;
+  return <PageWrapper title={'Video search'}></PageWrapper>;
 };
 
 export default Main;

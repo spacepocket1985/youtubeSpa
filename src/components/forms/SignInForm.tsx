@@ -1,21 +1,8 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormHelperText,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect, useState } from 'react';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
+import { useEffect } from 'react';
 
 import { validationSchemaSignIn } from '../../utils/validationSchema';
 import { useAppSelector, useAppDispatch } from '../../hooks/storeHooks';
@@ -23,13 +10,14 @@ import { RoutePaths } from '../../routes/routePaths';
 import { clearError, login } from '../../store/slices/authSlice';
 import { Snack } from '../snack/Snack';
 import { Spinner } from '../spinner/Spinner';
+import PasswordInput from './PasswordInput';
 
 type SignInInputsType = {
   email: string;
   password: string;
 };
 
-export const SiginInForm: React.FC = () => {
+export const SignInForm: React.FC = () => {
   const {
     handleSubmit,
     register,
@@ -50,10 +38,6 @@ export const SiginInForm: React.FC = () => {
     dispatch(clearError());
   }, [dispatch]);
 
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const onSubmit: SubmitHandler<SignInInputsType> = async (data) => {
     const loginResult = await dispatch(
       login({ email: data.email, password: data.password })
@@ -67,7 +51,7 @@ export const SiginInForm: React.FC = () => {
     <Box
       component="form"
       sx={{
-        '& .MuiTextField-root': { width: '20rem' },
+        '& .MuiTextField-root': { width: '22.5rem' },
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
@@ -77,7 +61,7 @@ export const SiginInForm: React.FC = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <TextField
-        label="Логин"
+        label="Email"
         type="email"
         autoComplete=""
         size="small"
@@ -85,38 +69,18 @@ export const SiginInForm: React.FC = () => {
         helperText={errors.email?.message}
         {...register('email')}
       />
-
-      <FormControl variant="outlined" size="small">
-        <InputLabel htmlFor="outlined-adornment-password">Пароль</InputLabel>
-        <OutlinedInput
-          label="Пароль"
-          id="outlined-adornment-password"
-          type={showPassword ? 'text' : 'password'}
-          autoComplete="current-password"
-          {...register('password')}
-          error={!!errors.password}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label={
-                  showPassword ? 'hide the password' : 'display the password'
-                }
-                onClick={handleClickShowPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-        <FormHelperText>{errors.password?.message}</FormHelperText>
-      </FormControl>
+      <PasswordInput
+        label="Password"
+        name="password"
+        error={errors.password?.message}
+        register={register}
+      />
 
       <Button type="submit" variant="contained" disabled={!isValid}>
         Войти
       </Button>
       <Typography sx={{ textAlign: 'center' }}>
-        У вас нет аккаунта? <Link to={RoutePaths.SignUpPage}>Регистрация.</Link>
+        Dont have an account? <Link to={RoutePaths.SignUpPage}>Register.</Link>
       </Typography>
     </Box>
   );

@@ -10,7 +10,7 @@ export const PageWrapper: React.FC<{
       container
       direction={'column'}
       spacing={2}
-      size={3}
+      size={4}
       sx={{
         m: 'auto',
         justifyContent: 'center',
@@ -28,7 +28,7 @@ export const PageWrapper: React.FC<{
           bgcolor: '#1976d2',
           borderRadius: 2,
           color: '#fff',
-          width: '20rem',
+          width: '22.5rem',
         }}
       >
         {title}

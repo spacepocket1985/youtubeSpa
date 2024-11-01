@@ -21,7 +21,7 @@ export const validationSchemaSignUp = Yup.object({
     .matches(/[0-9]/, 'Password strength: must have at least one digit')
     .matches(
       /[^A-ZА-Яa-zа-я0-9Ёё\s]/,
-      'Password must contain at least one special character(!@#$%^&*)'
+      'Password must contain at least one special character'
     )
     .min(8, 'Password must have at least 8 characters'),
   confirmPassword: Yup.string()
