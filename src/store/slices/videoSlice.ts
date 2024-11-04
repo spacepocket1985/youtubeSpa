@@ -11,12 +11,12 @@ import {
 
 type VideoState = {
   videos: VideoItem[];
-  searchTerm: string | null;
+  query: string | null;
   pageInfo: SearchInfo;
 };
 
 const initialState: VideoState = {
-  searchTerm: null,
+  query: null,
   videos: [],
   pageInfo: {
     totalResults: 0,
@@ -61,7 +61,11 @@ export const fetchYouTubeVideos = createAsyncThunk<
 const videoSlice = createSlice({
   name: 'youtubeVideos',
   initialState,
-  reducers: {},
+  reducers: {
+    setSearchQuery: (state, action) => {
+      state.query = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchYouTubeVideos.fulfilled, (state, action) => {
@@ -75,6 +79,6 @@ const videoSlice = createSlice({
   },
 });
 
-export const { actions } = videoSlice;
+export const { setSearchQuery } = videoSlice.actions;
 
 export default videoSlice.reducer;

@@ -1,6 +1,9 @@
 import { Box, Button, TextField } from '@mui/material';
 import { useCallback, useState } from 'react';
-import { fetchYouTubeVideos } from '../../store/slices/videoSlice';
+import {
+  fetchYouTubeVideos,
+  setSearchQuery,
+} from '../../store/slices/videoSlice';
 import { useAppDispatch } from '../../hooks/storeHooks';
 
 export const SerachPanel: React.FC = () => {
@@ -15,6 +18,7 @@ export const SerachPanel: React.FC = () => {
 
   const onSubmitSearch = useCallback((): void => {
     dispatch(fetchYouTubeVideos({ query }));
+    dispatch(setSearchQuery({ query }));
   }, [dispatch, query]);
 
   return (
