@@ -1,10 +1,13 @@
 import List from '@mui/material/List';
+
 import { useAppSelector } from '../../hooks/storeHooks';
 import { Video } from './Video';
 import { Spinner } from '../spinner/Spinner';
+import { Snack, SnackColor, SnackVariant } from '../snack/Snack';
 
 export const VideoList: React.FC = () => {
-  const { loading, videos } = useAppSelector((state) => state.videoList);
+  const { videos } = useAppSelector((state) => state.videoList);
+  const { loading, error } = useAppSelector((state) => state.app);
 
   const content = videos.map((item) => (
     <Video key={item.id.videoId} videoItem={item} />
@@ -13,8 +16,15 @@ export const VideoList: React.FC = () => {
   const contentOrSpinner = loading ? <Spinner /> : content;
 
   return (
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      {contentOrSpinner}
-    </List>
+    <>
+      <List sx={{ width: '100%', maxWidth: 800, bgcolor: 'background.paper' }}>
+        {contentOrSpinner}
+      </List>
+      {error && (
+        <Snack color={SnackColor.Danger} variant={SnackVariant.Solid}>
+          {error}
+        </Snack>
+      )}
+    </>
   );
 };

@@ -13,7 +13,9 @@ export const Video: React.FC<{ videoItem: VideoItem }> = ({ videoItem }) => {
         <ListItemAvatar>
           <Avatar
             alt="video img"
-            src={videoItem.snippet.thumbnails.default.url}
+            src={videoItem.snippet.thumbnails.medium?.url}
+            variant="square"
+            sx={{ width: 120, height: 90 }}
           />
         </ListItemAvatar>
         <ListItemText
@@ -25,9 +27,8 @@ export const Video: React.FC<{ videoItem: VideoItem }> = ({ videoItem }) => {
                 variant="body2"
                 sx={{ color: 'text.primary', display: 'inline' }}
               >
-                Ali Connors
+                {videoItem.snippet.description}
               </Typography>
-              {videoItem.snippet.description}
             </>
           }
         />

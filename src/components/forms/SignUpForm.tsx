@@ -6,10 +6,12 @@ import { User } from '../../service/SwaggerApi';
 import { Link, useNavigate } from 'react-router-dom';
 import { RoutePaths } from '../../routes/routePaths';
 import { Spinner } from '../spinner/Spinner';
-import { Snack } from '../snack/Snack';
+import { Snack, SnackColor, SnackVariant } from '../snack/Snack';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { registerUser } from '../../store/slices/authSlice';
 import PasswordInput from './PasswordInput';
+import { useEffect } from 'react';
+import { clearError } from '../../store/slices/appSlice';
 
 const Gender = ['male', 'female'];
 
@@ -33,11 +35,15 @@ export const SignUpForm: React.FC = () => {
   });
 
   const { loading: isLoading, error: isError } = useAppSelector(
-    (state) => state.auth
+    (state) => state.app
   );
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(clearError());
+  }, [dispatch]);
 
   const onSubmit: SubmitHandler<FormInputsType> = async (data) => {
     const userData: User = {
@@ -47,7 +53,6 @@ export const SignUpForm: React.FC = () => {
       gender: data.gender,
       age: data.age,
     };
-
     const registrationResult = await dispatch(registerUser(userData));
     if (registrationResult.meta.requestStatus === 'fulfilled') {
       navigate(RoutePaths.SignInPage);
@@ -152,7 +157,7 @@ export const SignUpForm: React.FC = () => {
       {spinnerOrContent}
 
       {isError && (
-        <Snack color="danger" variant="solid">
+        <Snack color={SnackColor.Danger} variant={SnackVariant.Solid}>
           {isError}
         </Snack>
       )}

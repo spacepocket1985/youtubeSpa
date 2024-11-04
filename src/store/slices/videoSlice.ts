@@ -1,46 +1,59 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { setLoading, setError } from './appSlice';
 import {
   _BaseEndpoint,
   _BaseMaxResults,
+  SearchInfo,
+  SortOrder,
   VideoItem,
   YouTubeSearchResponse,
 } from '../../service/YouTubeApi';
 
 type VideoState = {
-  loading: boolean;
-  error: null | string;
   videos: VideoItem[];
+  searchTerm: string | null;
+  pageInfo: SearchInfo;
 };
 
 const initialState: VideoState = {
-  loading: false,
-  error: null,
+  searchTerm: null,
   videos: [],
+  pageInfo: {
+    totalResults: 0,
+    resultsPerPage: 0,
+  },
 };
 
 export const fetchYouTubeVideos = createAsyncThunk<
   YouTubeSearchResponse,
-  { query: string; maxResults?: string },
+  { query: string; maxResults?: string; order?: SortOrder },
   { rejectValue: string }
 >(
   'youtubeVideos/search',
-  async ({ query, maxResults = _BaseMaxResults }, { rejectWithValue }) => {
+  async (
+    { query, maxResults = _BaseMaxResults, order = SortOrder.Relevance },
+    { dispatch, rejectWithValue }
+  ) => {
+    dispatch(setLoading(true));
+
     try {
       const response = await fetch(
-        `${_BaseEndpoint}&q=${query}&maxResults=${maxResults}&key=${import.meta.env.VITE_YOUTUBE_API_KEY}`
+        `${_BaseEndpoint}&q=${query}&maxResults=${maxResults}&order=${order}&key=${import.meta.env.VITE_YOUTUBE_API_KEY}`
       );
 
       if (!response.ok) {
-        return rejectWithValue('Network response was not ok');
+        throw new Error('Network response was not ok');
       }
 
       const data: YouTubeSearchResponse = await response.json();
       return data;
     } catch (error) {
-      if (error instanceof Error) {
-        return rejectWithValue(`Error. Login failed. ${error.message}`);
-      }
-      return rejectWithValue('Unknown error occurred');
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
+      dispatch(setError(errorMessage));
+      return rejectWithValue(errorMessage);
+    } finally {
+      dispatch(setLoading(false));
     }
   }
 );
@@ -48,24 +61,16 @@ export const fetchYouTubeVideos = createAsyncThunk<
 const videoSlice = createSlice({
   name: 'youtubeVideos',
   initialState,
-  reducers: {
-    clearError: (state) => {
-      state.error = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchYouTubeVideos.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
       .addCase(fetchYouTubeVideos.fulfilled, (state, action) => {
-        state.loading = false;
         state.videos = action.payload.items;
+        state.pageInfo = action.payload.pageInfo;
       })
-      .addCase(fetchYouTubeVideos.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || 'Unknown error';
+      .addCase(fetchYouTubeVideos.rejected, (state) => {
+        state.videos = initialState.videos;
+        state.pageInfo = initialState.pageInfo;
       });
   },
 });

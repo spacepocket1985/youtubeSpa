@@ -3,12 +3,24 @@ import Stack from '@mui/joy/Stack';
 import Snackbar from '@mui/joy/Snackbar';
 import React from 'react';
 
-type SnackColorType = 'primary' | 'neutral' | 'danger' | 'success' | 'warning';
-type SnackVariantType = 'outlined' | 'plain' | 'soft' | 'solid';
+export enum SnackColor {
+  Primary = 'primary',
+  Neutral = 'neutral',
+  Danger = 'danger',
+  Success = 'success',
+  Warning = 'warning',
+}
+
+export enum SnackVariant {
+  Outlined = 'outlined',
+  Plain = 'plain',
+  Soft = 'soft',
+  Solid = 'solid',
+}
 
 export const Snack: React.FC<{
-  color: SnackColorType;
-  variant: SnackVariantType;
+  color: SnackColor;
+  variant: SnackVariant;
   children: React.ReactNode;
 }> = ({ color, variant, children }) => {
   const [open, setOpen] = React.useState(true);
