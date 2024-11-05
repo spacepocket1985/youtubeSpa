@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { setLoading, setError } from './appSlice';
 import {
   _BaseEndpoint,
@@ -62,13 +62,13 @@ const videoSlice = createSlice({
   name: 'youtubeVideos',
   initialState,
   reducers: {
-    setSearchQuery: (state, action) => {
+    setSearchQuery: (state, action: PayloadAction<string>) => {
       state.query = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchYouTubeVideos.fulfilled, (state, action) => {
+      .addCase(fetchYouTubeVideos.fulfilled, (state, action: PayloadAction<YouTubeSearchResponse>) => {
         state.videos = action.payload.items;
         state.pageInfo = action.payload.pageInfo;
       })

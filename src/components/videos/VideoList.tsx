@@ -18,7 +18,7 @@ export const VideoList: React.FC = () => {
 
   return (
     <>
-      {videos && <VideoInformer />}
+      {videos.length > 0 && <VideoInformer />}
       <List sx={{ width: '100%', maxWidth: 800, bgcolor: 'background.paper' }}>
         {contentOrSpinner}
       </List>

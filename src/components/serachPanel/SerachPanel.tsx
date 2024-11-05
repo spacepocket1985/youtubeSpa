@@ -11,14 +11,13 @@ export const SerachPanel: React.FC = () => {
   const [query, setQuery] = useState('');
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = e.currentTarget.value.trim();
-    if (searchTerm.length === 0) return;
-    setQuery(searchTerm);
+    const searchTerm = e.currentTarget.value;
+    setQuery(searchTerm.trim());
   };
 
   const onSubmitSearch = useCallback((): void => {
     dispatch(fetchYouTubeVideos({ query }));
-    dispatch(setSearchQuery({ query }));
+    dispatch(setSearchQuery(query));
   }, [dispatch, query]);
 
   return (
@@ -29,7 +28,11 @@ export const SerachPanel: React.FC = () => {
         size={'small'}
         sx={{ flexGrow: 1 }}
       />
-      <Button onClick={onSubmitSearch} variant="contained">
+      <Button
+        onClick={onSubmitSearch}
+        variant="contained"
+        disabled={!query.length}
+      >
         Search
       </Button>
     </Box>
