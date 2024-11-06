@@ -7,11 +7,11 @@ export const VideoInformer: React.FC = () => {
 
   return (
     <Grid container gap={1}>
-      <Typography variant="h6" component="h6" >
-        {`Video on demand: '${query}'`}
+      <Typography variant="subtitle1" component="h6">
+        {`Video on demand: "${query}".`}
       </Typography>
-      <Typography variant="h6" component="h6">
-        {`Total results:${pageInfo.totalResults}`}
+      <Typography variant="subtitle1" component="h6" sx={{ color: 'gray' }}>
+        {`Total results: ${pageInfo.totalResults}`}
       </Typography>
     </Grid>
   );

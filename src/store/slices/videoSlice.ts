@@ -68,10 +68,13 @@ const videoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchYouTubeVideos.fulfilled, (state, action: PayloadAction<YouTubeSearchResponse>) => {
-        state.videos = action.payload.items;
-        state.pageInfo = action.payload.pageInfo;
-      })
+      .addCase(
+        fetchYouTubeVideos.fulfilled,
+        (state, action: PayloadAction<YouTubeSearchResponse>) => {
+          state.videos = action.payload.items;
+          state.pageInfo = action.payload.pageInfo;
+        }
+      )
       .addCase(fetchYouTubeVideos.rejected, (state) => {
         state.videos = initialState.videos;
         state.pageInfo = initialState.pageInfo;

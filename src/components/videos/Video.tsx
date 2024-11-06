@@ -15,7 +15,7 @@ export const Video: React.FC<{ videoItem: VideoItem }> = ({ videoItem }) => {
             alt="video img"
             src={videoItem.snippet.thumbnails.medium?.url}
             variant="square"
-            sx={{ width: 120, height: 90 }}
+            sx={{ width: 120, height: 90, mr: 0.5, border: 'solid 2px #1976d2' }}
           />
         </ListItemAvatar>
         <ListItemText
@@ -23,11 +23,18 @@ export const Video: React.FC<{ videoItem: VideoItem }> = ({ videoItem }) => {
           secondary={
             <>
               <Typography
-                component="span"
-                variant="body2"
+                component="h6"
+                variant="subtitle2"
                 sx={{ color: 'text.primary', display: 'inline' }}
               >
                 {videoItem.snippet.description}
+              </Typography>
+              <Typography
+                component="h6"
+                variant="subtitle1"
+                sx={{ color: 'text.primary', display: 'inline' }}
+              >
+                {videoItem.snippet.channelTitle}
               </Typography>
             </>
           }

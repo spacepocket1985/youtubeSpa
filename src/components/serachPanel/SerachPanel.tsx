@@ -12,7 +12,7 @@ export const SerachPanel: React.FC = () => {
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.currentTarget.value;
-    setQuery(searchTerm.trim());
+    setQuery(searchTerm);
   };
 
   const onSubmitSearch = useCallback((): void => {
