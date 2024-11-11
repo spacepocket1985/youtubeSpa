@@ -1,21 +1,35 @@
 import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { VideoItem } from '../../service/YouTubeApi';
+import { ListMode } from './ListViewMode';
 
-export const Video: React.FC<{ videoItem: VideoItem }> = ({ videoItem }) => {
+export const Video: React.FC<{ videoItem: VideoItem; viewMode: ListMode }> = ({
+  videoItem,
+  viewMode,
+}) => {
+  const gridStyle = {
+    maxWidth: '30%',
+    flexDirection: 'column',
+    margin: 'none',
+  };
+  const itemStyle = viewMode === ListMode.Grid ? gridStyle : null;
   return (
     <>
-      <ListItem alignItems="flex-start">
+      <ListItem alignItems="flex-start" sx={itemStyle}>
         <ListItemAvatar>
           <Avatar
             alt="video img"
             src={videoItem.snippet.thumbnails.medium?.url}
             variant="square"
-            sx={{ width: 120, height: 90, mr: 0.5, border: 'solid 2px #1976d2' }}
+            sx={{
+              width: 120,
+              height: 90,
+              mr: 0.5,
+              borderRadius: '5px',
+            }}
           />
         </ListItemAvatar>
         <ListItemText
@@ -23,16 +37,16 @@ export const Video: React.FC<{ videoItem: VideoItem }> = ({ videoItem }) => {
           secondary={
             <>
               <Typography
-                component="h6"
+                component="span"
                 variant="subtitle2"
-                sx={{ color: 'text.primary', display: 'inline' }}
+                sx={{ color: 'text.primary', display: 'block' }}
               >
                 {videoItem.snippet.description}
               </Typography>
               <Typography
-                component="h6"
+                component="span"
                 variant="subtitle1"
-                sx={{ color: 'text.primary', display: 'inline' }}
+                sx={{ color: 'text.primary', display: 'block' }}
               >
                 {videoItem.snippet.channelTitle}
               </Typography>
@@ -40,7 +54,6 @@ export const Video: React.FC<{ videoItem: VideoItem }> = ({ videoItem }) => {
           }
         />
       </ListItem>
-      <Divider variant="inset" component="li" />
     </>
   );
 };
