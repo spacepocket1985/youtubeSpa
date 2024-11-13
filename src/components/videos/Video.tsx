@@ -5,7 +5,7 @@ import { VideoItem } from '../../service/YouTubeApi';
 import { ViewMode } from './ListViewMode';
 import { Box } from '@mui/material';
 import { useAppSelector } from '../../hooks/storeHooks';
-import { selectViewMode } from '../../store/selectors/appSelectors';
+
 
 export const Video: React.FC<{ videoItem: VideoItem }> = ({ videoItem }) => {
   const gridStyle = {
@@ -13,7 +13,7 @@ export const Video: React.FC<{ videoItem: VideoItem }> = ({ videoItem }) => {
     flexDirection: 'column',
     margin: 'none',
   };
-  const viewMode = useAppSelector(selectViewMode);
+  const viewMode = useAppSelector((state) => state.app.view);
   const itemStyle = viewMode === ViewMode.Grid ? gridStyle : null;
 
   const imgStyle: React.CSSProperties =
@@ -33,7 +33,7 @@ export const Video: React.FC<{ videoItem: VideoItem }> = ({ videoItem }) => {
         };
 
   return (
-    <ListItem alignItems="flex-start" sx={itemStyle}>
+    <ListItem alignItems="flex-start" sx={itemStyle} key={videoItem.id.videoId}>
       <Box
         component="img"
         sx={imgStyle}

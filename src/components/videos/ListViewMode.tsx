@@ -4,7 +4,6 @@ import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import { Box } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 import { setViewMode } from '../../store/slices/appSlice';
-import { selectViewMode } from '../../store/selectors/appSelectors';
 
 export enum ViewMode {
   List = 'list',
@@ -13,7 +12,7 @@ export enum ViewMode {
 
 export const ListViewMode: React.FC = () => {
   const dispatch = useAppDispatch();
-  const viewMode = useAppSelector(selectViewMode);
+  const viewMode = useAppSelector((state) => state.app.view);
 
   return (
     <Box>
