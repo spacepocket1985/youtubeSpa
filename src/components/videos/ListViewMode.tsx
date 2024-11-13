@@ -2,34 +2,38 @@ import IconButton from '@mui/material/IconButton';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import { Box } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
+import { setViewMode } from '../../store/slices/appSlice';
+import { selectViewMode } from '../../store/selectors/appSelectors';
 
-export enum ListMode {
+export enum ViewMode {
   List = 'list',
   Grid = 'grid',
 }
 
-type ListViewModeProps = {
-  onChangeViewMode: (mode: ListMode) => void;
-};
+export const ListViewMode: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const viewMode = useAppSelector(selectViewMode);
 
-export const ListViewMode: React.FC<ListViewModeProps> = ({
-  onChangeViewMode,
-}) => {
   return (
     <Box>
       <IconButton
         onClick={() => {
-          onChangeViewMode(ListMode.List);
+          dispatch(setViewMode(ViewMode.List));
         }}
       >
-        <ViewListIcon color="primary" />
+        <ViewListIcon
+          color={viewMode === ViewMode.List ? 'primary' : 'disabled'}
+        />
       </IconButton>
       <IconButton
         onClick={() => {
-          onChangeViewMode(ListMode.Grid);
+          dispatch(setViewMode(ViewMode.Grid));
         }}
       >
-        <ViewModuleIcon color="primary" />
+        <ViewModuleIcon
+          color={viewMode === ViewMode.Grid ? 'primary' : 'disabled'}
+        />
       </IconButton>
     </Box>
   );

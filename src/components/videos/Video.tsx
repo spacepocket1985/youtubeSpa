@@ -2,22 +2,22 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { VideoItem } from '../../service/YouTubeApi';
-import { ListMode } from './ListViewMode';
+import { ViewMode } from './ListViewMode';
 import { Box } from '@mui/material';
+import { useAppSelector } from '../../hooks/storeHooks';
+import { selectViewMode } from '../../store/selectors/appSelectors';
 
-export const Video: React.FC<{ videoItem: VideoItem; viewMode: ListMode }> = ({
-  videoItem,
-  viewMode,
-}) => {
+export const Video: React.FC<{ videoItem: VideoItem }> = ({ videoItem }) => {
   const gridStyle = {
     maxWidth: '30%',
     flexDirection: 'column',
     margin: 'none',
   };
-  const itemStyle = viewMode === ListMode.Grid ? gridStyle : null;
+  const viewMode = useAppSelector(selectViewMode);
+  const itemStyle = viewMode === ViewMode.Grid ? gridStyle : null;
 
   const imgStyle: React.CSSProperties =
-    viewMode === ListMode.Grid
+    viewMode === ViewMode.Grid
       ? {
           width: '100%',
           height: '150px',
@@ -47,14 +47,23 @@ export const Video: React.FC<{ videoItem: VideoItem; viewMode: ListMode }> = ({
             <Typography
               component="span"
               variant="subtitle2"
-              sx={{ color: 'text.primary', display: 'block' }}
+              sx={{
+                color: 'text.primary',
+                display: 'block',
+                textAlign: 'justify',
+              }}
             >
               {videoItem.snippet.description}
             </Typography>
             <Typography
               component="span"
-              variant="subtitle1"
-              sx={{ color: 'text.primary', display: 'block' }}
+              variant="subtitle2"
+              sx={{
+                color: 'white',
+                backgroundColor: 'primary.main',
+                padding: 0.5,
+                borderRadius: 2,
+              }}
             >
               {videoItem.snippet.channelTitle}
             </Typography>
