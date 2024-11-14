@@ -5,13 +5,16 @@ import {
   InputAdornment,
   IconButton,
 } from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 import { useCallback, useState } from 'react';
 import {
   fetchYouTubeVideos,
   setSearchQuery,
 } from '../../store/slices/videoSlice';
 import { useAppDispatch } from '../../hooks/storeHooks';
+
+import { ModalWindow } from '../modalWindow/ModalWindow';
+import { FavoriteForm } from '../forms/FavoriteForm';
 
 export const SerachPanel: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -33,27 +36,35 @@ export const SerachPanel: React.FC = () => {
   }, [dispatch, query]);
 
   return (
-    <Box display={'flex'} sx={{ gap: 0.5 }}>
-      <OutlinedInput
-        value={query}
-        onChange={onChangeSearch}
-        size={'small'}
-        sx={{ flexGrow: 1 }}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton edge="end">
-              {showFavoritesIcon && <FavoriteBorderIcon />}
-            </IconButton>
-          </InputAdornment>
-        }
-      />
-      <Button
-        onClick={onSubmitSearch}
-        variant="contained"
-        disabled={!query.length}
-      >
-        Search
-      </Button>
-    </Box>
+    <>
+      <Box display={'flex'} sx={{ gap: 0.5 }}>
+        <OutlinedInput
+          value={query}
+          onChange={onChangeSearch}
+          size={'small'}
+          sx={{ flexGrow: 1 }}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton edge="end">
+                {showFavoritesIcon && (
+                  <ModalWindow
+                    iconType='favorite'
+                  >
+                    {(handleClose) => <FavoriteForm handleClose={handleClose} />}
+                  </ModalWindow>
+                )}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+        <Button
+          onClick={onSubmitSearch}
+          variant="contained"
+          disabled={!query.length}
+        >
+          Search
+        </Button>
+      </Box>
+    </>
   );
 };
