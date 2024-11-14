@@ -6,7 +6,6 @@ import { ViewMode } from './ListViewMode';
 import { Box } from '@mui/material';
 import { useAppSelector } from '../../hooks/storeHooks';
 
-
 export const Video: React.FC<{ videoItem: VideoItem }> = ({ videoItem }) => {
   const gridStyle = {
     maxWidth: '30%',

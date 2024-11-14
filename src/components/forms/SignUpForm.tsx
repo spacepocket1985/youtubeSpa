@@ -62,7 +62,6 @@ export const SignUpForm: React.FC = () => {
     <Box
       component="form"
       sx={{
-        '& .MuiTextField-root': { width: '22.5rem' },
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
