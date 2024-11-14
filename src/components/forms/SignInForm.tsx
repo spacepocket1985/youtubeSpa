@@ -7,10 +7,11 @@ import { useEffect } from 'react';
 import { validationSchemaSignIn } from '../../utils/validationSchema';
 import { useAppSelector, useAppDispatch } from '../../hooks/storeHooks';
 import { RoutePaths } from '../../routes/routePaths';
-import { clearError, login } from '../../store/slices/authSlice';
-import { Snack } from '../snack/Snack';
+import { login } from '../../store/slices/authSlice';
+import { Snack, SnackColor, SnackVariant } from '../snack/Snack';
 import { Spinner } from '../spinner/Spinner';
 import PasswordInput from './PasswordInput';
+import { clearError } from '../../store/slices/appSlice';
 
 type SignInInputsType = {
   email: string;
@@ -28,7 +29,7 @@ export const SignInForm: React.FC = () => {
   });
 
   const { loading: isLoading, error: isError } = useAppSelector(
-    (state) => state.auth
+    (state) => state.app
   );
 
   const dispatch = useAppDispatch();
@@ -51,7 +52,6 @@ export const SignInForm: React.FC = () => {
     <Box
       component="form"
       sx={{
-        '& .MuiTextField-root': { width: '22.5rem' },
         display: 'flex',
         justifyContent: 'center',
         alignContent: 'center',
@@ -90,7 +90,7 @@ export const SignInForm: React.FC = () => {
     <>
       {spinnerOrContent}
       {isError && (
-        <Snack color="danger" variant="solid">
+        <Snack color={SnackColor.Danger} variant={SnackVariant.Solid}>
           {isError}
         </Snack>
       )}

@@ -20,15 +20,14 @@ export const PageWrapper: React.FC<{
       }}
     >
       <Typography
-        variant="h4"
-        component="h4"
+        variant="h5"
+        component="h5"
         sx={{
           padding: 1,
           textAlign: 'center',
           bgcolor: '#1976d2',
           borderRadius: 2,
           color: '#fff',
-          width: '22.5rem',
         }}
       >
         {title}
