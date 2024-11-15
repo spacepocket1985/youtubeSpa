@@ -1,4 +1,4 @@
-import { FavoriteFormInputsType } from '../components/forms/FavoriteForm';
+import { FavoriteItemType } from '../pages/Favorites';
 
 const tokenStorageKey = 'authToken';
 const savedQueriesStorageKey = 'savedQueries';
@@ -10,7 +10,7 @@ const setToken = (token: string): void => {
 const isToken = (): string | null => localStorage.getItem(tokenStorageKey);
 const removeToken = (): void => localStorage.removeItem(tokenStorageKey);
 
-const saveQueryToLocalStorage = (query: FavoriteFormInputsType): void => {
+const saveQueryToLocalStorage = (query: FavoriteItemType): void => {
   const existingQueries = JSON.parse(
     localStorage.getItem(savedQueriesStorageKey) || '[]'
   );
@@ -18,7 +18,7 @@ const saveQueryToLocalStorage = (query: FavoriteFormInputsType): void => {
   localStorage.setItem(savedQueriesStorageKey, JSON.stringify(existingQueries));
 };
 
-const loadQueriesFromLocalStorage = (): FavoriteFormInputsType[] => {
+const loadQueriesFromLocalStorage = (): FavoriteItemType[] => {
   return JSON.parse(localStorage.getItem(savedQueriesStorageKey) || '[]');
 };
 

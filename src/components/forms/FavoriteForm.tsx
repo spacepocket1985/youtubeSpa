@@ -1,4 +1,5 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
+import { v4 as uuidv4 } from 'uuid';
 import Grid from '@mui/material/Grid2';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Slider from '@mui/material/Slider';
@@ -34,7 +35,7 @@ export const FavoriteForm: React.FC<FavoriteFormPropsType> = ({
   const { query, pageInfo } = useAppSelector((state) => state.videoList);
 
   const onSubmit: SubmitHandler<FavoriteFormInputsType> = async (data) => {
-    saveQueryToLocalStorage(data);
+    saveQueryToLocalStorage({...data, id: uuidv4()});
     handleClose();
   };
 
