@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  OutlinedInput,
-  InputAdornment,
-  IconButton,
-} from '@mui/material';
+import { Box, Button, OutlinedInput, InputAdornment } from '@mui/material';
 
 import { useCallback, useState } from 'react';
 import {
@@ -45,7 +39,7 @@ export const SerachPanel: React.FC = () => {
           sx={{ flexGrow: 1 }}
           endAdornment={
             <InputAdornment position="end">
-              <IconButton edge="end">
+              <>
                 {showFavoritesIcon && (
                   <ModalWindow iconType="favorite">
                     {(handleClose) => (
@@ -53,7 +47,7 @@ export const SerachPanel: React.FC = () => {
                     )}
                   </ModalWindow>
                 )}
-              </IconButton>
+              </>
             </InputAdornment>
           }
         />

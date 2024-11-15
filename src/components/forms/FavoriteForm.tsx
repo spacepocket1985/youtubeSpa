@@ -7,10 +7,11 @@ import { SortOrder } from '../../service/YouTubeApi';
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks/storeHooks';
 import { PageWrapper } from '../pageWrapper/PageWrapper';
+import { saveQueryToLocalStorage } from '../../utils/localStorageActions';
 
 const sortingOrder = Object.values(SortOrder);
 
-type FavoriteFormInputsType = {
+export type FavoriteFormInputsType = {
   query: string;
   name: string;
   sortBy: SortOrder;
@@ -33,7 +34,8 @@ export const FavoriteForm: React.FC<FavoriteFormPropsType> = ({
   const { query, pageInfo } = useAppSelector((state) => state.videoList);
 
   const onSubmit: SubmitHandler<FavoriteFormInputsType> = async (data) => {
-    console.log(data);
+    saveQueryToLocalStorage(data);
+    handleClose();
   };
 
   const [value, setValue] = useState(pageInfo.resultsPerPage);
@@ -130,7 +132,14 @@ export const FavoriteForm: React.FC<FavoriteFormPropsType> = ({
             </Grid>
           </Grid>
         </Box>
-        <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', alignItems:'center' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <Button
             type="button"
             variant="contained"

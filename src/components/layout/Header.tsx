@@ -21,6 +21,7 @@ export const Header: React.FC = () => {
   };
 
   const handleSearchBtn = (): void => navigate(RoutePaths.MainPage);
+  const handleFavoritesBtn = (): void => navigate(RoutePaths.Favorites);
   return (
     <Box>
       <AppBar position="static">
@@ -29,7 +30,9 @@ export const Header: React.FC = () => {
             <Button color="inherit" onClick={handleSearchBtn}>
               Search
             </Button>
-            <Button color="inherit">Favorites</Button>
+            <Button color="inherit" onClick={handleFavoritesBtn}>
+              Favorites
+            </Button>
           </Box>
           <Box>
             <IconButton color="inherit" size="small" onClick={handleLogOutBtn}>
