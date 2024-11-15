@@ -47,10 +47,10 @@ export const SerachPanel: React.FC = () => {
             <InputAdornment position="end">
               <IconButton edge="end">
                 {showFavoritesIcon && (
-                  <ModalWindow
-                    iconType='favorite'
-                  >
-                    {(handleClose) => <FavoriteForm handleClose={handleClose} />}
+                  <ModalWindow iconType="favorite">
+                    {(handleClose) => (
+                      <FavoriteForm handleClose={handleClose} />
+                    )}
                   </ModalWindow>
                 )}
               </IconButton>

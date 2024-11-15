@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import EditIcon from '@mui/icons-material/Edit';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Button, IconButton, Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 
 const defaultTop = '30%';
 
@@ -16,12 +16,6 @@ const style = {
   border: '4px solid #1976d2',
   boxShadow: 24,
   p: 4,
-};
-
-const styleCloseBtn = {
-  position: 'absolute' as const,
-  top: '-15px',
-  right: '-15px',
 };
 
 type ModalWindowPropsType = {
@@ -66,18 +60,7 @@ export const ModalWindow: React.FC<ModalWindowPropsType> = ({
         </Typography>
       </IconButton>
       <Modal open={open} onClose={handleClose}>
-        <Box sx={style}>
-          <Button
-            aria-label="close"
-            onClick={handleClose}
-            variant="contained"
-            size="small"
-            sx={styleCloseBtn}
-          >
-            Close
-          </Button>
-          {children(handleClose)}
-        </Box>
+        <Box sx={style}>{children(handleClose)}</Box>
       </Modal>
     </>
   );
