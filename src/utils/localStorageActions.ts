@@ -11,10 +11,13 @@ const isToken = (): string | null => localStorage.getItem(tokenStorageKey);
 const removeToken = (): void => localStorage.removeItem(tokenStorageKey);
 
 const saveQueryToLocalStorage = (query: FavoriteItemType): void => {
-  const existingQueries = JSON.parse(
+  const existingQueries: FavoriteItemType[] = JSON.parse(
     localStorage.getItem(savedQueriesStorageKey) || '[]'
   );
-  existingQueries.push(query);
+  const queryIndex = existingQueries.findIndex((item) => item.id === query.id);
+  if (queryIndex === -1) existingQueries.push(query);
+  else existingQueries[queryIndex] = query;
+
   localStorage.setItem(savedQueriesStorageKey, JSON.stringify(existingQueries));
 };
 

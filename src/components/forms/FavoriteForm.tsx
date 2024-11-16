@@ -6,40 +6,33 @@ import Slider from '@mui/material/Slider';
 
 import { SortOrder } from '../../service/YouTubeApi';
 import { useState } from 'react';
-import { useAppSelector } from '../../hooks/storeHooks';
 import { PageWrapper } from '../pageWrapper/PageWrapper';
 import { saveQueryToLocalStorage } from '../../utils/localStorageActions';
+import { FavoriteItemType } from '../../pages/Favorites';
 
 const sortingOrder = Object.values(SortOrder);
 
-export type FavoriteFormInputsType = {
-  query: string;
-  name: string;
-  sortBy: SortOrder;
-  maxCount: number;
-};
-
 type FavoriteFormPropsType = {
   handleClose: () => void;
+  item: FavoriteItemType;
 };
 
 export const FavoriteForm: React.FC<FavoriteFormPropsType> = ({
   handleClose,
+  item,
 }) => {
   const {
     handleSubmit,
     register,
     formState: { errors, isValid },
-  } = useForm<FavoriteFormInputsType>();
+  } = useForm<FavoriteItemType>();
 
-  const { query, pageInfo } = useAppSelector((state) => state.videoList);
-
-  const onSubmit: SubmitHandler<FavoriteFormInputsType> = async (data) => {
-    saveQueryToLocalStorage({...data, id: uuidv4()});
+  const onSubmit: SubmitHandler<FavoriteItemType> = async (data) => {
+    saveQueryToLocalStorage({ ...data, id: item.id || uuidv4() });
     handleClose();
   };
 
-  const [value, setValue] = useState(pageInfo.resultsPerPage);
+  const [value, setValue] = useState(item.maxCount);
 
   const handleSliderChange = (_event: Event, newValue: number | number[]) => {
     setValue(newValue as number);
@@ -72,12 +65,13 @@ export const FavoriteForm: React.FC<FavoriteFormPropsType> = ({
       >
         <TextField
           label="qurey"
-          value={query}
+          value={item.query}
           type="text"
           size="small"
           {...register('query')}
         />
         <TextField
+          defaultValue={item.name}
           label="name"
           type="text"
           size="small"
@@ -87,7 +81,7 @@ export const FavoriteForm: React.FC<FavoriteFormPropsType> = ({
         <TextField
           select
           label="Sort By"
-          defaultValue={sortingOrder[2]}
+          defaultValue={item.sortBy}
           slotProps={{
             select: {
               native: true,

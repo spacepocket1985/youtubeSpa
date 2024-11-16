@@ -9,6 +9,7 @@ import { useAppDispatch } from '../../hooks/storeHooks';
 
 import { ModalWindow } from '../modalWindow/ModalWindow';
 import { FavoriteForm } from '../forms/FavoriteForm';
+import { SortOrder } from '../../service/YouTubeApi';
 
 export const SerachPanel: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -43,7 +44,15 @@ export const SerachPanel: React.FC = () => {
                 {showFavoritesIcon && (
                   <ModalWindow iconType="favorite">
                     {(handleClose) => (
-                      <FavoriteForm handleClose={handleClose} />
+                      <FavoriteForm
+                        handleClose={handleClose}
+                        item={{
+                          query,
+                          name: '',
+                          sortBy: SortOrder.Relevance,
+                          maxCount: 12,
+                        }}
+                      />
                     )}
                   </ModalWindow>
                 )}
