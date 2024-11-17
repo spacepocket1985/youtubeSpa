@@ -8,11 +8,14 @@ import {
   VideoItem,
   YouTubeSearchResponse,
 } from '../../service/YouTubeApi';
+import { FavoriteItemType } from '../../pages/Favorites';
+import { getQueriesFromLS } from '../../utils/localStorageActions';
 
 type VideoState = {
   videos: VideoItem[];
   query: string | null;
   pageInfo: SearchInfo;
+  favorites: FavoriteItemType[];
 };
 
 const initialState: VideoState = {
@@ -22,6 +25,7 @@ const initialState: VideoState = {
     totalResults: 0,
     resultsPerPage: 0,
   },
+  favorites: getQueriesFromLS(),
 };
 
 export const fetchYouTubeVideos = createAsyncThunk<
@@ -65,6 +69,20 @@ const videoSlice = createSlice({
     setSearchQuery: (state, action: PayloadAction<string>) => {
       state.query = action.payload;
     },
+    favoriteItemAdd: (state, action: PayloadAction<FavoriteItemType>) => {
+      state.favorites.unshift(action.payload);
+    },
+    favoriteItemUpdate: (state, action: PayloadAction<FavoriteItemType>) => {
+      const itemIndex = state.favorites.findIndex(
+        (item) => item.id! === action.payload.id!
+      );
+      state.favorites[itemIndex] = action.payload;
+    },
+    favoriteItemDelete: (state, action: PayloadAction<string>) => {
+      state.favorites = state.favorites.filter(
+        (item) => item.id! !== action.payload
+      );
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -82,6 +100,13 @@ const videoSlice = createSlice({
   },
 });
 
-export const { setSearchQuery } = videoSlice.actions;
+export const {
+  setSearchQuery,
+  favoriteItemAdd,
+  favoriteItemDelete,
+  favoriteItemUpdate,
+} = videoSlice.actions;
+
+export type ActionType = typeof videoSlice.actions; 
 
 export default videoSlice.reducer;

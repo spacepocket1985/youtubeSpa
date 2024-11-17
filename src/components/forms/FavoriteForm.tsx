@@ -7,8 +7,12 @@ import Slider from '@mui/material/Slider';
 import { SortOrder } from '../../service/YouTubeApi';
 import { useState } from 'react';
 import { PageWrapper } from '../pageWrapper/PageWrapper';
-import { saveQueryToLocalStorage } from '../../utils/localStorageActions';
 import { FavoriteItemType } from '../../pages/Favorites';
+import { useAppDispatch } from '../../hooks/storeHooks';
+import {
+  favoriteItemUpdate,
+  favoriteItemAdd,
+} from '../../store/slices/videoSlice';
 
 const sortingOrder = Object.values(SortOrder);
 
@@ -24,29 +28,47 @@ export const FavoriteForm: React.FC<FavoriteFormPropsType> = ({
   const {
     handleSubmit,
     register,
+    setValue,
     formState: { errors, isValid },
   } = useForm<FavoriteItemType>();
 
+  const dispatch = useAppDispatch();
+
   const onSubmit: SubmitHandler<FavoriteItemType> = async (data) => {
-    saveQueryToLocalStorage({ ...data, id: item.id || uuidv4() });
+    const favorite = { ...data, id: item.id || uuidv4() };
+    console.log(favorite);
+
+    if (item.id) {
+      dispatch(favoriteItemUpdate({ ...data, id: item.id }));
+    } else {
+      dispatch(favoriteItemAdd({ ...data, id: uuidv4() }));
+    }
+
     handleClose();
   };
 
-  const [value, setValue] = useState(item.maxCount);
+  const [value, setSliderValue] = useState(item.maxCount);
 
   const handleSliderChange = (_event: Event, newValue: number | number[]) => {
-    setValue(newValue as number);
+    const numericValue = newValue as number;
+    setSliderValue(numericValue);
+    setValue('maxCount', numericValue);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value === '' ? 0 : Number(event.target.value));
+    const numericValue =
+      event.target.value === '' ? 0 : Number(event.target.value);
+    setSliderValue(numericValue);
+    setValue('maxCount', numericValue);
   };
 
   const handleBlur = () => {
     if (value < 0) {
-      setValue(0);
+      setSliderValue(0);
+      setValue('maxCount', 0);
     } else if (value > 50) {
-      setValue(50);
+      setSliderValue(50);
+      setValue('maxCount', 50);
     }
   };
 

@@ -10,26 +10,19 @@ const setToken = (token: string): void => {
 const isToken = (): string | null => localStorage.getItem(tokenStorageKey);
 const removeToken = (): void => localStorage.removeItem(tokenStorageKey);
 
-const saveQueryToLocalStorage = (query: FavoriteItemType): void => {
-  const existingQueries: FavoriteItemType[] = JSON.parse(
-    localStorage.getItem(savedQueriesStorageKey) || '[]'
-  );
-  const queryIndex = existingQueries.findIndex((item) => item.id === query.id);
-  if (queryIndex === -1) existingQueries.push(query);
-  else existingQueries[queryIndex] = query;
-
-  localStorage.setItem(savedQueriesStorageKey, JSON.stringify(existingQueries));
+const getQueriesFromLS = (): FavoriteItemType[] => {
+  const storedData = localStorage.getItem(savedQueriesStorageKey);
+  return storedData ? JSON.parse(storedData) : [];
 };
 
-const loadQueriesFromLocalStorage = (): FavoriteItemType[] => {
-  return JSON.parse(localStorage.getItem(savedQueriesStorageKey) || '[]');
+const saveQueriesToLS = (favorites: FavoriteItemType[]): void => {
+  localStorage.setItem(savedQueriesStorageKey, JSON.stringify(favorites));
 };
 
 export {
-  tokenStorageKey,
   setToken,
   isToken,
   removeToken,
-  saveQueryToLocalStorage,
-  loadQueriesFromLocalStorage,
+  getQueriesFromLS,
+  saveQueriesToLS,
 };
