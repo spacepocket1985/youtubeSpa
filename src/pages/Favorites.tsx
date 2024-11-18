@@ -48,7 +48,7 @@ export const Favorites: React.FC = () => {
             <ListItem>
               <ListItemText
                 primary={`${query.name}`}
-                sx={{ cursor: 'pointer'}}
+                sx={{ cursor: 'pointer' }}
                 onClick={() => {
                   handleFavoriteItemClick(
                     query.query,

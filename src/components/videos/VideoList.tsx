@@ -8,17 +8,12 @@ import { VideoInformer } from './VideoInformer';
 import { ListViewMode } from './ListViewMode';
 import { Box } from '@mui/material';
 
-
 export const VideoList: React.FC = () => {
   const { videos } = useAppSelector((state) => state.videoList);
   const { loading, error } = useAppSelector((state) => state.app);
 
-
   const renderVideos = videos.map((item) => (
-    <Video
-      key={uuidv4()}
-      videoItem={item}
-    />
+    <Video key={uuidv4()} videoItem={item} />
   ));
 
   const contentOrSpinner = loading ? (
