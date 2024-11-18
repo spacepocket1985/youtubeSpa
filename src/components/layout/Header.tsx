@@ -2,6 +2,7 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
+import Badge from '@mui/material/Badge';
 
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -11,9 +12,11 @@ import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { RoutePaths } from '../../routes/routePaths';
 import { removeToken } from '../../utils/localStorageActions';
+import { useAppSelector } from '../../hooks/storeHooks';
 
 export const Header: React.FC = () => {
   const navigate = useNavigate();
+  const favoriteCount = useAppSelector(state=>state.videoList.favorites.length)
 
   const handleLogOutBtn = (): void => {
     removeToken();
@@ -30,9 +33,16 @@ export const Header: React.FC = () => {
             <Button color="inherit" onClick={handleSearchBtn}>
               Search
             </Button>
-            <Button color="inherit" onClick={handleFavoritesBtn}>
-              Favorites
-            </Button>
+
+            <Badge
+              badgeContent={favoriteCount}
+              color="secondary"
+              showZero
+            >
+              <Button color="inherit" onClick={handleFavoritesBtn}>
+                Favorites
+              </Button>
+            </Badge>
           </Box>
           <Box>
             <IconButton color="inherit" size="small" onClick={handleLogOutBtn}>
