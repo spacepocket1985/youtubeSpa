@@ -1,5 +1,6 @@
 export const _BaseEndpoint =
   'https://www.googleapis.com/youtube/v3/search?part=snippet';
+export const _StatEndpoint = 'https://www.googleapis.com/youtube/v3/videos';
 
 export const _BaseMaxResults = '12';
 export enum SortOrder {
@@ -39,11 +40,19 @@ type VideoId = {
   playlistId?: string;
 };
 
+type VideoStatistics = {
+  viewCount: string;
+  likeCount?: string;
+  dislikeCount?: string;
+  commentCount?: string;
+};
+
 export type VideoItem = {
   kind: string;
   etag: string;
   id: VideoId;
   snippet: Snippet;
+  statistics?: VideoStatistics;
 };
 
 export type SearchInfo = { totalResults: number; resultsPerPage: number };
@@ -51,4 +60,30 @@ export type SearchInfo = { totalResults: number; resultsPerPage: number };
 export type YouTubeSearchResponse = {
   items: VideoItem[];
   pageInfo: SearchInfo;
+};
+
+export type VideoStatisticsResponse = {
+  kind: string;
+  etag: string;
+  items: {
+    kind: string;
+    etag: string;
+    id: string;
+    statistics: {
+      viewCount: string;
+      likeCount?: string;
+      dislikeCount?: string;
+      commentCount?: string;
+    };
+  }[];
+};
+
+export type VideoStatisticsItem = {
+  id: string;
+  statistics: {
+    viewCount: string;
+    likeCount?: string;
+    dislikeCount?: string;
+    commentCount?: string;
+  };
 };

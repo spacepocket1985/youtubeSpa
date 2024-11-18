@@ -1,4 +1,5 @@
 import List from '@mui/material/List';
+import { v4 as uuidv4 } from 'uuid';
 import { useAppSelector } from '../../hooks/storeHooks';
 import { Video } from './Video';
 import { Spinner } from '../spinner/Spinner';
@@ -12,7 +13,7 @@ export const VideoList: React.FC = () => {
   const { loading, error } = useAppSelector((state) => state.app);
 
   const renderVideos = videos.map((item) => (
-    <Video key={item.id.videoId} videoItem={item} />
+    <Video key={uuidv4()} videoItem={item} />
   ));
 
   const contentOrSpinner = loading ? (
