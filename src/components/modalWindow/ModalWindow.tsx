@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { IconButton, Typography } from '@mui/material';
 
-const defaultTop = '30%';
+const defaultTop = '35%';
 
 const style = {
   position: 'absolute' as const,

@@ -42,15 +42,13 @@ export const Favorites: React.FC = () => {
 
   return (
     <PageWrapper title="Favorites queries">
-      <Paper elevation={4} sx={{minWidth:300}}>
-        <List
-          sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-        >
-          {favorites.map((query, index) => (
-            <ListItem key={index} divider>
+      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        {favorites.map((query, index) => (
+          <Paper elevation={2} sx={{ minWidth: 300, mb: 1 }} key={index}>
+            <ListItem>
               <ListItemText
                 primary={`${query.name}`}
-                sx={{ cursor: 'pointer' }}
+                sx={{ cursor: 'pointer'}}
                 onClick={() => {
                   handleFavoriteItemClick(
                     query.query,
@@ -74,9 +72,9 @@ export const Favorites: React.FC = () => {
                 <DeleteIcon />
               </IconButton>
             </ListItem>
-          ))}
-        </List>
-      </Paper>
+          </Paper>
+        ))}
+      </List>
     </PageWrapper>
   );
 };
