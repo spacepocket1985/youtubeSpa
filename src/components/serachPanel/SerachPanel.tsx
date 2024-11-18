@@ -5,7 +5,7 @@ import {
   fetchYouTubeVideos,
   setSearchQuery,
 } from '../../store/slices/videoSlice';
-import { useAppDispatch } from '../../hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/storeHooks';
 
 import { ModalWindow } from '../modalWindow/ModalWindow';
 import { FavoriteForm } from '../forms/FavoriteForm';
@@ -13,8 +13,9 @@ import { SortOrder } from '../../service/YouTubeApi';
 
 export const SerachPanel: React.FC = () => {
   const dispatch = useAppDispatch();
+  const queryFromStore = useAppSelector((state) => state.videoList.query);
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(queryFromStore);
   const [showFavoritesIcon, setShowFavoritesIcon] = useState(false);
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {

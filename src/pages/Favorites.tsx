@@ -8,8 +8,14 @@ import { SortOrder } from '../service/YouTubeApi';
 import { ModalWindow } from '../components/modalWindow/ModalWindow';
 import { FavoriteForm } from '../components/forms/FavoriteForm';
 import { useAppDispatch, useAppSelector } from '../hooks/storeHooks';
-import { IconButton } from '@mui/material';
-import { favoriteItemDelete } from '../store/slices/videoSlice';
+import { IconButton, Paper } from '@mui/material';
+import {
+  favoriteItemDelete,
+  fetchYouTubeVideos,
+  setSearchQuery,
+} from '../store/slices/videoSlice';
+import { useNavigate } from 'react-router-dom';
+import { RoutePaths } from '../routes/routePaths';
 
 export type FavoriteItemType = {
   query: string;
@@ -22,30 +28,55 @@ export type FavoriteItemType = {
 export const Favorites: React.FC = () => {
   const { favorites } = useAppSelector((state) => state.videoList);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleFavoriteItemClick = (
+    query: string,
+    count: number,
+    order: SortOrder
+  ): void => {
+    dispatch(fetchYouTubeVideos({ query, maxResults: String(count), order }));
+    dispatch(setSearchQuery(query));
+    navigate(RoutePaths.MainPage);
+  };
 
   return (
     <PageWrapper title="Favorites queries">
-      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        {favorites.map((query, index) => (
-          <ListItem key={index}>
-            <ListItemText primary={`${query.name}`} />
-            <ModalWindow iconType="edit">
-              {(handleClose) => (
-                <FavoriteForm handleClose={handleClose} item={query} />
-              )}
-            </ModalWindow>
-            <IconButton
-              color="primary"
-              size="small"
-              onClick={() => {
-                dispatch(favoriteItemDelete(query.id!));
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </ListItem>
-        ))}
-      </List>
+      <Paper elevation={4} sx={{minWidth:300}}>
+        <List
+          sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+        >
+          {favorites.map((query, index) => (
+            <ListItem key={index} divider>
+              <ListItemText
+                primary={`${query.name}`}
+                sx={{ cursor: 'pointer' }}
+                onClick={() => {
+                  handleFavoriteItemClick(
+                    query.query,
+                    query.maxCount,
+                    query.sortBy
+                  );
+                }}
+              />
+              <ModalWindow iconType="edit">
+                {(handleClose) => (
+                  <FavoriteForm handleClose={handleClose} item={query} />
+                )}
+              </ModalWindow>
+              <IconButton
+                color="primary"
+                size="small"
+                onClick={() => {
+                  dispatch(favoriteItemDelete(query.id!));
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </ListItem>
+          ))}
+        </List>
+      </Paper>
     </PageWrapper>
   );
 };

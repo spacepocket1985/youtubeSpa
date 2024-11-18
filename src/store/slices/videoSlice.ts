@@ -13,13 +13,13 @@ import { getQueriesFromLS } from '../../utils/localStorageActions';
 
 type VideoState = {
   videos: VideoItem[];
-  query: string | null;
+  query: string;
   pageInfo: SearchInfo;
   favorites: FavoriteItemType[];
 };
 
 const initialState: VideoState = {
-  query: null,
+  query: '',
   videos: [],
   pageInfo: {
     totalResults: 0,
@@ -107,6 +107,6 @@ export const {
   favoriteItemUpdate,
 } = videoSlice.actions;
 
-export type ActionType = typeof videoSlice.actions; 
+export type ActionType = typeof videoSlice.actions;
 
 export default videoSlice.reducer;

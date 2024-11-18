@@ -19,10 +19,4 @@ const saveQueriesToLS = (favorites: FavoriteItemType[]): void => {
   localStorage.setItem(savedQueriesStorageKey, JSON.stringify(favorites));
 };
 
-export {
-  setToken,
-  isToken,
-  removeToken,
-  getQueriesFromLS,
-  saveQueriesToLS,
-};
+export { setToken, isToken, removeToken, getQueriesFromLS, saveQueriesToLS };

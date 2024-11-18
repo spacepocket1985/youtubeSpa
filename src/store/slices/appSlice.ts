@@ -36,6 +36,6 @@ const appSlice = createSlice({
 export const { setLoading, setError, clearError, setViewMode } =
   appSlice.actions;
 
-export type ActionType= typeof appSlice.actions;
+export type ActionType = typeof appSlice.actions;
 
 export default appSlice.reducer;
