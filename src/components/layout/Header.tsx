@@ -30,7 +30,13 @@ export const Header: React.FC = () => {
   return (
     <Box>
       <AppBar position="static">
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Toolbar
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            paddingX: { xs: 1, sm: 4, md: 16 },
+          }}
+        >
           <Box>
             <Button color="inherit" onClick={handleSearchBtn}>
               Search

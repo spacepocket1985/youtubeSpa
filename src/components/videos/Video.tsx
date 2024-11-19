@@ -86,7 +86,7 @@ export const Video: React.FC<{ videoItem: VideoItem }> = ({ videoItem }) => {
                     justifyContent: 'flex-start',
                     alignItems: 'center',
                   }}
-                  component={'p'}
+                  component={'span'}
                 >
                   <Typography
                     component="span"

@@ -21,8 +21,7 @@ export const VideoList: React.FC = () => {
   ) : (
     <List
       sx={{
-        width: '100%',
-        maxWidth: 800,
+        width: { xs: '100%', sm: '80%', md: '60%', lg: '50%' },
         bgcolor: 'background.paper',
         display: 'flex',
         justifyContent: 'space-between',
