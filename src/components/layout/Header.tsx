@@ -16,7 +16,9 @@ import { useAppSelector } from '../../hooks/storeHooks';
 
 export const Header: React.FC = () => {
   const navigate = useNavigate();
-  const favoriteCount = useAppSelector(state=>state.videoList.favorites.length)
+  const favoriteCount = useAppSelector(
+    (state) => state.videoList.favorites.length
+  );
 
   const handleLogOutBtn = (): void => {
     removeToken();
@@ -34,11 +36,7 @@ export const Header: React.FC = () => {
               Search
             </Button>
 
-            <Badge
-              badgeContent={favoriteCount}
-              color="secondary"
-              showZero
-            >
+            <Badge badgeContent={favoriteCount} color="secondary" showZero>
               <Button color="inherit" onClick={handleFavoritesBtn}>
                 Favorites
               </Button>

@@ -33,7 +33,7 @@ export const SerachPanel: React.FC = () => {
 
   return (
     <>
-      <Box display={'flex'} sx={{ gap: 0.5, width: 800 }}>
+      <Box display={'flex'} sx={{ gap: 0.5, maxWidth: 800 }}>
         <OutlinedInput
           value={query}
           onChange={onChangeSearch}
