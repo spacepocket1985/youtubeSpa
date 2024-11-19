@@ -34,7 +34,7 @@ export const Header: React.FC = () => {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-             paddingX: { xs: 1, sm: 4, md: 16 }
+            paddingX: { xs: 1, sm: 4, md: 16 },
           }}
         >
           <Box>
