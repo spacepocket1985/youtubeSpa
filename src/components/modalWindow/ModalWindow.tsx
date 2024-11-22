@@ -30,8 +30,8 @@ export const ModalWindow: React.FC<ModalWindowPropsType> = ({
   iconLabel,
 }) => {
   const [open, setOpen] = React.useState(false);
-  const handleClose = () => setOpen(false);
-  const handleOpen = () => setOpen(true);
+
+  const handleToggle = () => setOpen((prevOpen) => !prevOpen);
 
   const renderIcon = () => {
     switch (iconType) {
@@ -48,7 +48,7 @@ export const ModalWindow: React.FC<ModalWindowPropsType> = ({
     <>
       <IconButton
         aria-label="edit"
-        onClick={handleOpen}
+        onClick={handleToggle}
         style={{
           color: '#1976d2',
           marginRight: '5px',
@@ -59,8 +59,8 @@ export const ModalWindow: React.FC<ModalWindowPropsType> = ({
           {iconLabel}
         </Typography>
       </IconButton>
-      <Modal open={open} onClose={handleClose}>
-        <Box sx={style}>{children(handleClose)}</Box>
+      <Modal open={open} onClose={handleToggle}>
+        <Box sx={style}>{children(handleToggle)}</Box>
       </Modal>
     </>
   );

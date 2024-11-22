@@ -15,6 +15,7 @@ import {
 } from '../../store/slices/videoSlice';
 
 const sortingOrder = Object.values(SortOrder);
+const MinResultsNumber = 0;
 
 type FavoriteFormPropsType = {
   handleClose: () => void;
@@ -57,7 +58,7 @@ export const FavoriteForm: React.FC<FavoriteFormPropsType> = ({
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const numericValue =
-      event.target.value === '' ? 0 : Number(event.target.value);
+      event.target.value === '' ? MinResultsNumber : Number(event.target.value);
     setSliderValue(numericValue);
     setValue('maxCount', numericValue);
   };

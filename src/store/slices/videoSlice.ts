@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { setLoading, setError } from './appSlice';
 import {
-  _BaseEndpoint,
-  _BaseMaxResults,
-  _StatEndpoint,
+  BaseEndpoint,
+  BaseMaxResults,
+  StatEndpoint,
   SearchInfo,
   SortOrder,
   VideoItem,
@@ -38,13 +38,13 @@ export const fetchYouTubeVideos = createAsyncThunk<
 >(
   'youtubeVideos/search',
   async (
-    { query, maxResults = _BaseMaxResults, order = SortOrder.Relevance },
+    { query, maxResults = BaseMaxResults, order = SortOrder.Relevance },
     { dispatch, rejectWithValue }
   ) => {
     dispatch(setLoading(true));
     try {
       const response = await fetch(
-        `${_BaseEndpoint}&q=${query}&maxResults=${maxResults}&order=${order}&key=${import.meta.env.VITE_YOUTUBE_API_KEY}`
+        `${BaseEndpoint}&q=${query}&maxResults=${maxResults}&order=${order}&key=${import.meta.env.VITE_YOUTUBE_API_KEY}`
       );
 
       if (!response.ok) {
@@ -79,7 +79,7 @@ export const fetchVideoStatistics = createAsyncThunk<
     dispatch(setLoading(true));
     try {
       const response = await fetch(
-        `${_StatEndpoint}?id=${videoIds}&key=${import.meta.env.VITE_YOUTUBE_API_KEY}&part=statistics`
+        `${StatEndpoint}?id=${videoIds}&key=${import.meta.env.VITE_YOUTUBE_API_KEY}&part=statistics`
       );
 
       if (!response.ok) {

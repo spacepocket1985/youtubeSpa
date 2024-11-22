@@ -1,7 +1,7 @@
-const _BaseEndpoint = 'https://todo-redev.herokuapp.com/api';
+const BaseEndpoint = 'https://todo-redev.herokuapp.com/api';
 
-export const _LoginEndpoint = `${_BaseEndpoint}/auth/login`;
-export const _RegEndpoint = `${_BaseEndpoint}/users/register`;
+export const LoginEndpoint = `${BaseEndpoint}/auth/login`;
+export const RegEndpoint = `${BaseEndpoint}/users/register`;
 
 export type User = {
   id?: number;
