@@ -1,8 +1,8 @@
-export const _BaseEndpoint =
+export const BaseEndpoint =
   'https://www.googleapis.com/youtube/v3/search?part=snippet';
-export const _StatEndpoint = 'https://www.googleapis.com/youtube/v3/videos';
+export const StatEndpoint = 'https://www.googleapis.com/youtube/v3/videos';
 
-export const _BaseMaxResults = '12';
+export const BaseMaxResults = '12';
 export enum SortOrder {
   Date = 'date',
   Rating = 'rating',

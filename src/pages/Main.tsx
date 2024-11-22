@@ -5,12 +5,10 @@ import { VideoList } from '../components/videos/VideoList';
 
 const Main: React.FC = () => {
   return (
-    <>
-      <PageWrapper title={'Video search'}>
-        <SerachPanel />
-        <VideoList />
-      </PageWrapper>
-    </>
+    <PageWrapper title={'Video search'}>
+      <SerachPanel />
+      <VideoList />
+    </PageWrapper>
   );
 };
 

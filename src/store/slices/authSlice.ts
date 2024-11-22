@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { removeToken, setToken } from '../../utils/localStorageActions';
-import { _LoginEndpoint, _RegEndpoint, User } from '../../service/SwaggerApi';
+import { LoginEndpoint, RegEndpoint, User } from '../../service/SwaggerApi';
 import { setError, setLoading } from './appSlice';
 
 const initialState = {};
@@ -12,7 +12,7 @@ export const login = createAsyncThunk<
 >('auth/login', async ({ email, password }, { dispatch, rejectWithValue }) => {
   dispatch(setLoading(true));
   try {
-    const response = await fetch(_LoginEndpoint, {
+    const response = await fetch(LoginEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export const registerUser = createAsyncThunk<
   dispatch(setLoading(true));
 
   try {
-    const response = await fetch(_RegEndpoint, {
+    const response = await fetch(RegEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
